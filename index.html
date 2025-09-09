@@ -1,43 +1,76 @@
 <!DOCTYPE html>
+<!--
+  =========================================
+  GUIA RÁPIDO PARA EDITORES DO SIMPÓSIO UEG
+  =========================================
+  Procure por "EDITAR:" nos comentários para saber o que é possivel alterar conforme novos Simpósios.
+
+  ESTRUTURA GERAL:
+  - <head>: metadados, fontes, cores, Tailwind e ícones.
+  - <header>: topo fixo com logo e navegação.
+  - <main>:
+      #inicio       -> "hero" (banner principal, datas e botões).
+      #sobre        -> descrição do evento e do curso.
+      #programacao  -> abas por dia e atividades.
+      #palestrantes -> carrossel de palestrantes.
+      #galeria      -> carrossel de fotos.
+      #inscricao    -> informações, mapa e botões de inscrição.
+  - <footer>: créditos finais.
+  - <script>: JS de interação (menu, abas, carrosséis, rolagem, links dinâmicos).
+
+  IMPORTANTE:
+  - Não precisa instalar nada: Tailwind e ícones vêm via CDN/Lucide.
+-->
+
 <html lang="pt-BR" class="no-js scroll-smooth">
 <head>
+  <!-- ========================= SEÇÃO: METADADOS E ESTILO GLOBAL ========================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título exibido na aba do navegador e em buscas -->
   <title>UEG - Simpósio de Tecnologia da Informação</title>
+
+  <!-- EDITAR: Descrição para mecanismos de busca -->
   <meta name="description" content="Simpósio de Tecnologia da Informação da UEG — programação, palestrantes, inscrições, curso de Sistemas de Informação e galeria." />
+
+  <!-- EDITAR: Cor do tema do navegador em dispositivos móveis -->
   <meta name="theme-color" content="#0d47a1" />
 
-  <!-- Open Graph / Social -->
+  <!-- ========================= SEÇÃO: OPEN GRAPH / COMPARTILHAMENTO ===================== -->
+  <!-- EDITAR: Título, descrição e imagem ao compartilhar nas redes -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="UEG - Simpósio de Tecnologia da Informação" />
   <meta property="og:description" content="Participe do Simpósio de Tecnologia da Informação da UEG. Programação, palestrantes e inscrições." />
   <meta property="og:image" content="https://placehold.co/1200x630/0d47a1/ffffff?text=STI+UEG" />
 
-  <!-- Favicon (placeholder) -->
+  <!-- ========================= SEÇÃO: FAVICON ========================================== -->
   <link rel="icon" href="assets\images\UegLogoSimples.ico" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- ========================= SEÇÃO: TAILWIND E FONTES ================================= -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Inter (tipografia principal do site) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
 
-  <!-- Lucide Icons -->
+  <!-- Ícones Lucide (usados em botões e listas) -->
   <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.js" defer></script>
 
+  <!-- ========================= SEÇÃO: PALETA E TOKENS DE ESTILO ========================= -->
+  <!-- EDITAR: Cores da marca e sombras globais (valores hex) -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
           colors: {
-            'ueg-blue': '#0d47a1',
-            'ueg-blue-600': '#1e63d4',
-            'ueg-gold': '#ffab00',
-            'dark-bg': '#0b1220',
-            'dark-card': '#121a2a'
+            'ueg-blue': '#0d47a1',     /* EDITAR: azul institucional */
+            'ueg-blue-600': '#1e63d4', /* EDITAR: azul destaque */
+            'ueg-gold': '#ffab00',     /* EDITAR: dourado destaque */
+            'dark-bg': '#0b1220',      /* Fundo geral escuro */
+            'dark-card': '#121a2a'     /* Fundo de cartões */
           },
           boxShadow: {
             glow: '0 0 0 1px rgba(255,255,255,0.04), 0 10px 30px rgba(0,0,0,0.35)'
@@ -47,14 +80,15 @@
     }
   </script>
 
+  <!-- ========================= SEÇÃO: CSS ESPECÍFICO ==================================== -->
   <style>
-    /* Scrollbar */
+    /* Scrollbar escura para combinar com o tema */
     ::-webkit-scrollbar{width:10px;height:10px}
     ::-webkit-scrollbar-track{background:#0f172a}
     ::-webkit-scrollbar-thumb{background:#0d47a1;border-radius:9999px}
     ::-webkit-scrollbar-thumb:hover{background:#1e63d4}
 
-    /* Animação de entrada com fallback sem JS */
+    /* Animação de entrada; respeita "reduzir movimento" do SO */
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease}
     .reveal.active{opacity:1;transform:none}
     .no-js .reveal{opacity:1;transform:none}
@@ -63,33 +97,43 @@
 </head>
 
 <body class="bg-dark-bg text-slate-200 font-sans selection:bg-ueg-gold selection:text-black">
+  <!-- Link para acessibilidade: permite pular direto ao conteúdo -->
   <a href="#inicio" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-4 focus:left-4 bg-ueg-gold text-black font-bold px-4 py-2 rounded-md">Pular para o conteúdo</a>
 
+  <!-- ========================= SEÇÃO: CABEÇALHO ========================================= -->
+  <!-- EDITAR: Logo, itens do menu e botão "Inscreva-se" -->
   <header class="sticky top-0 z-50 bg-dark-bg/70 backdrop-blur border-b border-white/5">
     <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo (substituir imagem em assets/images/LogoUegBranca.png) -->
       <a href="#inicio" class="flex items-center gap-3 text-white font-black tracking-wider text-xl" aria-label="Página inicial STI UEG">
           <img src="assets\images\LogoUegBranca.png" alt="Logo UEG" class="h-7 w-auto" />
       </a>
 
+      <!-- Menu desktop: altere textos e âncoras conforme as seções abaixo -->
       <nav class="hidden md:flex items-center gap-6" aria-label="Navegação primária">
+        <!--  Itens de navegação -->
         <a class="hover:text-white/90 text-slate-300" href="#sobre">Sobre</a>
         <a class="hover:text-white/90 text-slate-300" href="#programacao">Programação</a>
         <a class="hover:text-white/90 text-slate-300" href="#palestrantes">Palestrantes</a>
         <a class="hover:text-white/90 text-slate-300" href="#galeria">Galeria</a>
+
+        <!-- Botão principal: âncora para seção de inscrições -->
         <a class="inline-flex items-center gap-2 bg-ueg-gold text-black font-bold px-4 py-2 rounded-full hover:bg-ueg-gold/90 focus:outline-none focus:ring-2 focus:ring-ueg-gold/40" href="#inscricao">
           <i data-lucide="ticket"></i>
           <span>Inscreva-se</span>
         </a>
       </nav>
 
+      <!-- Botão do menu mobile (abre/fecha o menu abaixo) -->
       <button id="menuBtn" class="md:hidden text-slate-200 p-2 rounded-md hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/10" aria-controls="mobileMenu" aria-expanded="false" aria-label="Abrir menu">
         <i data-lucide="menu"></i>
       </button>
     </div>
 
-    <!-- Mobile menu -->
+    <!-- Menu mobile: mantenha os mesmos itens do menu desktop -->
     <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-dark-card">
       <div class="max-w-7xl mx-auto px-4 py-3 grid gap-1">
+        <!--  Itens de navegação (mesmos alvos do desktop) -->
         <a class="block px-3 py-2 rounded-md hover:bg-white/5" href="#sobre">Sobre</a>
         <a class="block px-3 py-2 rounded-md hover:bg-white/5" href="#programacao">Programação</a>
         <a class="block px-3 py-2 rounded-md hover:bg-white/5" href="#palestrantes">Palestrantes</a>
@@ -103,24 +147,36 @@
   </header>
 
   <main>
+    <!-- ========================= SEÇÃO: INÍCIO (HERO) ==================================== -->
+    <!-- EDITAR: Fundo, título, subtítulo, datas e textos dos botões -->
     <section id="inicio" class="relative min-h-[78vh] md:min-h-[86vh] grid place-items-center overflow-hidden">
       <div class="absolute inset-0">
+        <!-- EDITAR: Imagem de fundo (substituir WallpaperFundo.jpg) -->
         <img src="assets\images\WallpaperFundo.jpg" alt="Fundo abstrato de tecnologia" class="w-full h-full object-cover opacity-20" loading="eager" />
+        <!-- Créditos da imagem acima (mantenha ou substitua conforme a nova imagem) -->
         <!--CRÉDITOS DA IMAGEM: https://www.hdwallpapers.in/technology_circuit_board_hd_technology-wallpapers.html-->
       </div>
       <div class="relative z-10 max-w-5xl px-4 md:px-6 text-center reveal active">
+        <!-- Título principal do evento -->
         <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white">
           Simpósio de Tecnologia da Informação
         </h1>
+        <!-- Subtítulo (campus ou unidade) -->
         <p class="mt-3 text-slate-300">UEG — Campus Anápolis de Ciências Exatas e Tecnológicas</p>
+        <!-- EDITAR: Datas do evento (texto estático) -->
         <p class="mt-1 text-ueg-gold font-bold text-lg">16 a 18 de setembro</p>
+
+        <!-- Contador -->
         <p id="contador" class="mt-1 text-ueg-gold font-bold text-lg"></p>
 
+        <!-- Botões de ação (âncoras internas) -->
         <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <!-- Texto do botão principal -->
           <a href="#inscricao" class="inline-flex items-center gap-2 bg-ueg-gold text-black font-bold px-6 py-3 rounded-full hover:bg-ueg-gold/90 focus:outline-none focus:ring-2 focus:ring-ueg-gold/40">
             <i data-lucide="send"></i>
             <span>Garanta sua vaga</span>
           </a>
+          <!-- Rótulo do botão secundário -->
           <a href="#programacao" class="inline-flex items-center gap-2 bg-white/5 text-white px-6 py-3 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/10">
             <i data-lucide="calendar"></i>
             <span>Ver programação</span>
@@ -129,26 +185,35 @@
       </div>
     </section>
 
+    <!-- ========================= SEÇÃO: SOBRE ============================================ -->
+    <!-- Textos institucionais do evento e do curso -->
     <section id="sobre" class="scroll-mt-24 py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 reveal">
         <div class="text-center max-w-3xl mx-auto">
+          <!-- EDITAR: Título e subtítulo da seção -->
           <h2 class="text-3xl md:text-5xl font-extrabold text-white">Conectando mentes, <span class="text-ueg-gold">criando o futuro</span></h2>
           <p class="mt-3 text-slate-400">Exploramos fronteiras da tecnologia e inspiramos a próxima geração de inovadores.</p>
         </div>
         <div class="mt-12 grid sm:grid-cols-2 gap-6">
+          <!-- CARTÃO: Sobre o evento -->
           <article class="bg-dark-card/80 border border-white/5 rounded-2xl p-7 shadow-glow hover:border-ueg-gold/30 transition">
             <header class="flex items-center gap-3 mb-3">
               <i data-lucide="sparkles" class="text-ueg-gold"></i>
               <h3 class="text-2xl font-bold text-white">Sobre o evento</h3>
             </header>
+            <!-- EDITAR: Parágrafo com resumo do simpósio -->
             <p class="text-slate-300 leading-relaxed">O Simpósio de Tecnologia da Informação (STI) da UEG reúne estudantes, docentes, pesquisadores e profissionais para discutir tendências, desafios e inovações em TI. A programação inclui palestras, minicursos e workshops, promovendo conhecimento, troca de experiências e networking.</p>
           </article>
+
+          <!-- CARTÃO: Sobre o curso -->
           <article class="bg-dark-card/80 border border-white/5 rounded-2xl p-7 shadow-glow hover:border-ueg-gold/30 transition">
             <header class="flex items-center gap-3 mb-3">
               <i data-lucide="graduation-cap" class="text-ueg-gold"></i>
               <h3 class="text-2xl font-bold text-white">Sistemas de Informação</h3>
             </header>
+            <!-- EDITAR: Descrição do curso (público, ênfases, diferenciais) -->
             <p class="text-slate-300 leading-relaxed">O Bacharelado em Sistemas de Informação da UEG forma profissionais com base teórica e prática sólidas para desenvolver, integrar e gerenciar soluções computacionais em diversos setores. O curso valoriza projeto prático, pesquisa aplicada e parcerias com o mercado.</p>
+            <!-- EDITAR: "tags" de áreas de atuação; adicione/remova spans conforme necessário -->
             <div class="mt-4 flex flex-wrap gap-2 text-sm">
               <span class="px-3 py-1 rounded-full bg-white/5">Desenvolvimento de Software</span>
               <span class="px-3 py-1 rounded-full bg-white/5">Dados & IA</span>
@@ -160,23 +225,33 @@
       </div>
     </section>
 
+    <!-- ========================= SEÇÃO: PROGRAMAÇÃO ====================================== -->
     <section id="programacao" class="scroll-mt-24 py-20 md:py-28 bg-dark-card/60">
       <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 reveal">
         <div class="text-center max-w-3xl mx-auto">
           <h2 class="text-3xl md:text-5xl font-extrabold text-white">Programação</h2>
+          <!-- EDITAR: Dias, horários e atividades. -->
           <p class="mt-3 text-slate-400">Três dias de pura imersão em tecnologia e inovação.</p>
         </div>
 
         <div class="mt-10 max-w-4xl mx-auto">
+          <!-- Abas: mude os rótulos/datas conforme necessário -->
           <div class="flex justify-center gap-2 border-b border-white/10" role="tablist" aria-label="Dias do evento">
+            <!-- EDITAR: Dias, horários e atividades. Para adicionar/remover um dia, duplique/apague o <button> e a role abaixo OBS: não se esqueça que alterar o id"tab-dia" e "content-dia" em cada bloco para ficar conforme o dia criado. -->
+            <!-- EDITAR: Data e legenda do Dia 1 -->
             <button id="tab-dia1" class="tab-button px-5 py-3 text-sm sm:text-base font-semibold text-ueg-gold border-b-2 border-ueg-gold"
               role="tab" aria-selected="true" aria-controls="content-dia1">Dia 1<br>16/Set</button>
+            <!-- EDITAR: Data e legenda do Dia 2 -->
             <button id="tab-dia2" class="tab-button px-5 py-3 text-sm sm:text-base font-semibold text-slate-300 border-b-2 border-transparent hover:text-white"
               role="tab" aria-selected="false" aria-controls="content-dia2">Dia 2<br>17/Set</button>
+            <!-- EDITAR: Data e legenda do Dia 3 -->
             <button id="tab-dia3"class="tab-button px-5 py-3 text-sm sm:text-base font-semibold text-slate-300 border-b-2 border-transparent hover:text-white"
               role="tab" aria-selected="false" aria-controls="content-dia3">Dia 3<br>18/Set</button>
           </div>
 
+          <!-- CONTEÚDO: DIA 1 -->
+          <!-- EDITAR: Cada bloco representa uma atividade com ícone, título e horário -->
+          <!-- EDITAR: Mudar o icone da atividade no <i data-lucide="">, para isso veja na internet os disponiveis (exemplo: mephone,cpu...) OBS: Não se esqueça que alterar o "content-dia" em cada bloco para ficar conforme o dia criado. -->
           <div id="content-dia1" class="tab-content space-y-4 pt-6" role="tabpanel" tabindex="0" aria-labelledby="tab-dia1">
             <div class="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/5">
               <div class="shrink-0 w-16 h-16 grid place-items-center rounded-lg bg-ueg-blue/20">
@@ -207,6 +282,9 @@
             </div>
           </div>
 
+          <!-- CONTEÚDO: DIA 2 -->
+          <!-- EDITAR: Cada bloco representa uma atividade com ícone, título e horário -->
+          <!-- EDITAR: Mudar o icone da atividade no <i data-lucide="">, para isso veja na internet os disponiveis (exemplo: mephone,cpu...) OBS: Não se esqueça que alterar o "content-dia" em cada bloco para ficar conforme o dia criado. -->
           <div id="content-dia2" class="tab-content space-y-4 pt-6 hidden" role="tabpanel" tabindex="0" aria-labelledby="tab-dia2">
             <div class="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/5">
               <div class="shrink-0 w-16 h-16 grid place-items-center rounded-lg bg-ueg-blue/20">
@@ -237,21 +315,25 @@
             </div>
           </div>
 
-              <div id="content-dia3" class="tab-content space-y-4 pt-6 hidden" role="tabpanel" tabindex="0" aria-labelledby="tab-dia3">
-           <div class="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/5">
-             <div class="shrink-0 w-16 h-16 grid place-items-center rounded-lg bg-ueg-blue/20">
-              <i data-lucide="code-2"></i>
-            </div>
-            <div class="grow">
-              <h3 class="text-white font-bold">Hackathon de Encerramento</h3>
-              <p class="text-slate-400 text-sm">14:00 — Desafios práticos e premiações</p>
+          <!-- CONTEÚDO: DIA 3 -->
+          <!-- EDITAR: Cada bloco representa uma atividade com ícone, título e horário -->
+          <!-- EDITAR: Mudar o icone da atividade no <i data-lucide="">, para isso veja na internet os disponiveis (exemplo: mephone,cpu...) OBS: Não se esqueça que alterar o "content-dia" em cada bloco para ficar conforme o dia criado. -->
+          <div id="content-dia3" class="tab-content space-y-4 pt-6 hidden" role="tabpanel" tabindex="0" aria-labelledby="tab-dia3">
+            <div class="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/5">
+              <div class="shrink-0 w-16 h-16 grid place-items-center rounded-lg bg-ueg-blue/20">
+                <i data-lucide="code-2"></i>
+              </div>
+              <div class="grow">
+                <h3 class="text-white font-bold">Hackathon de Encerramento</h3>
+                <p class="text-slate-400 text-sm">14:00 — Desafios práticos e premiações</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </section>
 
+    <!-- ========================= SEÇÃO: PALESTRANTES ===================================== -->
     <section id="palestrantes" class="scroll-mt-24 py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 reveal">
         <div class="text-center max-w-3xl mx-auto">
@@ -259,6 +341,7 @@
           <p class="mt-3 text-slate-400">Mentes que estão moldando o futuro da tecnologia.</p>
         </div>
 
+        <!-- Controles do carrossel (os botões navegam o track abaixo) -->
         <div class="mt-8 flex items-center justify-between">
           <button id="speakersPrev" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 focus:ring-2 focus:ring-white/20" aria-label="Palestrantes anteriores">
             <i data-lucide="arrow-left"></i><span class="hidden sm:inline">Anterior</span>
@@ -269,7 +352,10 @@
           </button>
         </div>
 
+        <!-- Lista horizontal de palestrantes -->
         <div id="speakersTrack" class="mt-6 flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4">
+          <!-- EDITAR: Para adicionar/remover um novo palestrante, duplique/remova um <article> e ajuste imagem, nome, cargo e descrição -->
+          <!-- EDITAR: Substitua a imagem (src), ALT, nome, cargo e mini-bio -->
           <article class="snap-start shrink-0 w-[280px] sm:w-[300px] bg-dark-card/80 border border-white/5 rounded-2xl p-8 text-center shadow-glow hover:border-ueg-gold/30 transition">
             <img class="w-28 h-28 rounded-full mx-auto border-4 border-white/10 object-cover" src="https://placehold.co/320x320/121a2a/FFFFFF?text=AL" alt="Foto de Ana Lúcia" loading="lazy" />
             <h3 class="mt-5 text-xl font-bold text-white">Dra. Ana Lúcia</h3>
@@ -315,6 +401,7 @@
       </div>
     </section>
 
+    <!-- ========================= SEÇÃO: GALERIA ========================================== -->
     <section id="galeria" class="scroll-mt-24 py-20 md:py-28 bg-dark-card/60">
       <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 reveal">
         <div class="text-center max-w-3xl mx-auto">
@@ -322,6 +409,7 @@
           <p class="mt-3 text-slate-400">Momentos marcantes de edições anteriores.</p>
         </div>
 
+        <!-- Controles do carrossel de imagens -->
         <div class="mt-8 flex items-center justify-between">
           <button id="galleryPrev" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 focus:ring-2 focus:ring-white/20" aria-label="Imagens anteriores">
             <i data-lucide="arrow-left"></i><span class="hidden sm:inline">Anterior</span>
@@ -332,7 +420,9 @@
           </button>
         </div>
 
+        <!-- Lista horizontal de imagens -->
         <div id="galleryTrack" class="mt-6 flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
+          <!-- EDITAR: Substitua os src das imagens; cada <figure> é um item do carrossel -->
           <figure class="snap-start shrink-0 w-[280px] h-[200px] sm:w-[360px] sm:h-[240px] overflow-hidden rounded-xl border border-white/5 shadow-glow">
             <img class="w-full h-full object-cover hover:scale-105 transition" src="https://placehold.co/800x600/0d47a1/FFFFFF?text=STI+2024" alt="Público do STI 2024" loading="lazy" />
           </figure>
@@ -353,6 +443,8 @@
       </div>
     </section>
 
+    <!-- ========================= SEÇÃO: INSCRIÇÃO ======================================== -->
+    <!-- Datas, local, link do Eventbrite e links de tutoriais. -->
     <section id="inscricao" class="scroll-mt-24 py-20 md:py-28">
       <div class="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 reveal">
         <div class="text-center max-w-3xl mx-auto">
@@ -360,10 +452,13 @@
         </div>
 
         <div class="mt-10 grid lg:grid-cols-5 gap-6">
+          <!-- COLUNA LATERAL: Informações resumidas -->
           <aside class="lg:col-span-2 bg-dark-card/80 border border-white/5 rounded-2xl p-6 shadow-glow">
             <ul class="mt-4 space-y-3 text-sm text-slate-300">
+              <!-- EDITAR: Período do evento -->
               <li class="flex items-start gap-2"><i data-lucide="calendar" class="mt-0.5"></i> 16 a 18 de setembro</li>
               <li class="flex items-start gap-2"><i data-lucide="map-pin" class="mt-0.5"></i> UEG — Câmpus Anápolis de Ciências Exatas e Tecnológicas</li>
+
               <div class="mt-3 rounded-lg overflow-hidden" style="max-width:100%;">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.8546242064776!2d-48.94872882394527!3d-16.38136633768419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ebb4fa9a0e811%3A0x26cba1f1f43e5366!2sUEG%20-%20C%C3%A2mpus%20Central%20-%20Sede%20An%C3%A1polis%20-%20Ci%C3%AAncias%20Exatas%20e%20Tecnol%C3%B3gicas%20-%20CET%20-%20Henrique%20Santillo!5e0!3m2!1spt-BR!2sbr!4v1756077260135!5m2!1spt-BR!2sbr&style=feature:all|element:geometry|color:0x212121&style=feature:all|element:labels.text.fill|color:0xffffff&style=feature:all|element:labels.text.stroke|color:0x000000&style=feature:road|element:geometry|color:0x383838"
@@ -375,32 +470,44 @@
                   referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
               </div>
+
+              <!-- EDITAR: Horário de abertura -->
               <li class="flex items-start gap-2"><i data-lucide="clock" class="mt-0.5"></i> Abertura às 19:00 no dia 16/09</li>
+              <!-- EDITAR: E-mail de contato -->
               <li class="flex items-start gap-2"><i data-lucide="mail" class="mt-0.5"></i> Contato: sti@ueg.br</li>
             </ul>
           </aside>
 
+          <!-- COLUNA PRINCIPAL: Botões e avisos -->
           <div class="lg:col-span-3 grid gap-6">
+            <!-- CARTÃO: Botões de inscrição e tutoriais -->
             <div class="bg-dark-card/80 border border-white/5 rounded-2xl p-6 shadow-glow">
               <div class="mt-4 grid sm:grid-cols-2 gap-3">
+                <!-- EDITAR: Link do Eventbrite -->
+                <!-- Altere o href abaixo. -->
                 <a id="ctaDia1" href="https://eventbrite.com" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-ueg-gold text-black font-bold px-5 py-3 rounded-xl hover:bg-ueg-gold/90">
                   <i data-lucide="ticket"></i>
                   <center><span>Inscrever-se pelo Eventbrite</span></center>
                 </a>
+
+                <!-- EDITAR: Link para vídeo tutorial (YouTube, etc.) -->
+                <!-- Altere o href abaixo. -->
                 <a id="linkGuiaWeb" href="https://youtube.com" target="_blank" rel="noopener" class="block bg-dark-card/80 border border-white/5 rounded-2xl p-5 hover:border-ueg-gold/30 shadow-glow">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="monitor-play" class="text-ueg-gold"></i>
-                  <div>
-                    <p class="font-semibold text-white">Como inscrever-se</p>
-                    <p class="text-xs text-slate-400">Vídeo com passo-a-passo</p>
+                  <div class="flex items-center gap-3">
+                    <i data-lucide="monitor-play" class="text-ueg-gold"></i>
+                    <div>
+                      <p class="font-semibold text-white">Como inscrever-se</p>
+                      <p class="text-xs text-slate-400">Vídeo com passo-a-passo</p>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
               </div>
             </div>
 
+            <!-- CARTÃO: Avisos importantes -->
             <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
               <h4 class="font-semibold text-white flex items-center gap-2"><i data-lucide="alert-triangle" class="text-ueg-gold"></i> Avisos importantes</h4>
+              <!-- EDITAR: Regras de credenciamento (QR code, horário, etc.) -->
               <ul class="mt-3 space-y-2 text-sm text-slate-300 list-disc pl-5">
                 <li>Após a inscrição, <strong>baixe/salve o ticket com QR code</strong> do Eventbrite.</li>
                 <li>Leve o QR code (impresso ou no celular) para <strong>validar a presença</strong>.</li>
@@ -413,6 +520,8 @@
     </section>
   </main>
 
+  <!-- ========================= SEÇÃO: RODAPÉ ============================================ -->
+  <!-- EDITAR: Créditos finais e direitos autorais -->
   <footer class="bg-dark-card border-t border-white/5 text-slate-400 py-10">
     <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 text-center">
       <p class="text-white font-bold">Simpósio de Tecnologia da Informação — STI UEG</p>
@@ -421,19 +530,24 @@
     </div>
   </footer>
 
+  <!-- Botão "voltar ao topo" aparece após rolar a página -->
   <button id="toTop" class="fixed bottom-4 right-4 p-3 rounded-full bg-white/5 text-white border border-white/10 backdrop-blur hover:bg-white/10 opacity-0 pointer-events-none transition" aria-label="Voltar ao topo">
     <i data-lucide="arrow-up"></i>
   </button>
 
+  <!-- ========================= SEÇÃO: SCRIPTS =========================================== -->
+  <!-- EDITAR: Alterar a data do contador, veja o arquivo abaixo na pasta assets do github -->
   <script src="assets/js/Contador.js" defer></script>
 
   <script>
     document.documentElement.classList.remove('no-js');
     
     window.addEventListener('load', () => {
+      /* Inicializa ícones Lucide após o carregamento */
       if (window.lucide && lucide.createIcons) lucide.createIcons();
 
-      // Menu mobile
+      /* ========== MENU MOBILE ========== */
+      /* Alterna abertura/fechamento do menu no mobile */
       const menuBtn = document.getElementById('menuBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       if (menuBtn && mobileMenu) {
@@ -442,12 +556,15 @@
           menuBtn.setAttribute('aria-expanded', String(isOpen));
           if (window.lucide && lucide.createIcons) lucide.createIcons();
         });
+        /* Fecha o menu ao clicar em um link */
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
           mobileMenu.classList.add('hidden');
           menuBtn.setAttribute('aria-expanded', 'false');
         }));
       }
 
+      /* ========== ABAS DA PROGRAMAÇÃO ========== */
+      /* Troca visual entre os dias do evento */
       const tabs = Array.from(document.querySelectorAll('.tab-button'));
       const contents = Array.from(document.querySelectorAll('.tab-content'));
       function activateTab(tab){
@@ -470,6 +587,7 @@
       }
       tabs.forEach((tab, idx) => {
         tab.addEventListener('click', () => activateTab(tab));
+        /* Acessibilidade: setas do teclado para navegar */
         tab.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
             e.preventDefault();
@@ -480,6 +598,8 @@
         });
       });
 
+      /* ========== CARROSSEIS (Palestrantes e Galeria) ========== */
+      /* Reuso da função para ambos os tracks */
       function initCarousel(trackId, prevId, nextId){
         const track = document.getElementById(trackId);
         const prev = document.getElementById(prevId);
@@ -499,15 +619,19 @@
         next.addEventListener('click', () => { track.scrollBy({ left:  scrollByAmount(), behavior: 'smooth' }); });
         track.addEventListener('scroll', updateButtons, { passive:true });
 
+        /* Acessibilidade: setas do teclado dentro do carrossel */
         track.setAttribute('tabindex','0');
         track.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowLeft') prev.click();
           if (e.key === 'ArrowRight') next.click();
         });
       }
+      /* Inicializa carrosséis (IDs definidos no HTML) */
       initCarousel('speakersTrack','speakersPrev','speakersNext');
       initCarousel('galleryTrack','galleryPrev','galleryNext');
 
+      /* ========== REVEAL NA ROLAGEM ========== */
+      /* Ativa animação de entrada quando o elemento entra na viewport */
       const io = new IntersectionObserver((entries, obs) => {
         for (const e of entries) {
           if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); }
@@ -515,6 +639,7 @@
       }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+      /* ========== BOTÃO "VOLTAR AO TOPO" ========== */
       const toTop = document.getElementById('toTop');
       const onScroll = () => {
         if (window.scrollY > 300) { toTop.style.opacity = '1'; toTop.style.pointerEvents = 'auto'; }
